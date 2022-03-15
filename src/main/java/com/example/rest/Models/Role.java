@@ -1,30 +1,35 @@
 package com.example.rest.Models;
 
+
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+
 
 @Entity
 @Table(name = "roles")
 public class Role implements GrantedAuthority {
+
     @Id
     @Column(name = "role_id")
-   Long id;
+    private Long id;
 
     @Column(name = "name")
-    String name;
-@ManyToMany(mappedBy = "roles")
-       List<User>users = new ArrayList<>();
+    private String name;
+
 
     public Role() {
     }
 
-
+    @ManyToMany(mappedBy = "roles")
+    List<User>users = new ArrayList<>();
 
     @Override
+//    @JsonIgnore
     public String getAuthority() {
         return getName();
     }
@@ -52,6 +57,7 @@ public class Role implements GrantedAuthority {
         this.name = name;
     }
 
+@JsonIgnore
     public List<User> getUsers() {
         return users;
     }

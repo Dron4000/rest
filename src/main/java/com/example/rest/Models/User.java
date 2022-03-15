@@ -1,44 +1,54 @@
 package com.example.rest.Models;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class User implements UserDetails
-{
-
-
+public class User implements UserDetails, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    Long id;
-    @Column(name = "first_name")
-    String FirstName;
-    @Column(name = "last_name")
-    String LastName;
-    @Column(name = "age")
-    int age;
-    @Column(name = "email")
-    String Email;
-    @Column(name = "password")
-    String password;
+    private Long id;
 
-    @ManyToMany
+
+    @Column(name = "first_name")
+    private String FirstName;
+
+
+    @Column(name = "last_name")
+    private String LastName;
+
+
+    @Column(name = "age")
+    private int age;
+
+
+    @Column(name = "email")
+    private String Email;
+
+
+    @Column(name = "password")
+    private String password;
+
+
+    @ManyToMany(fetch = FetchType.LAZY)
     @Fetch(FetchMode.JOIN)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    Set<Role> roles;
+    private Set<Role> roles;
 
     public User() {
     }
@@ -63,36 +73,42 @@ public class User implements UserDetails
     }
 
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();
     }
 
     @Override
     public String getPassword() {
-        return password ;
+        return password;
     }
 
     @Override
+    @JsonIgnore
     public String getUsername() {
-        return getFirstName();
+        return FirstName;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonLocked() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isEnabled() {
         return true;
     }
@@ -133,6 +149,7 @@ public class User implements UserDetails
         this.password = password;
     }
 
+
     public Set<Role> getRoles() {
         return roles;
     }
@@ -142,4 +159,9 @@ public class User implements UserDetails
     }
 
 
+
+    @Override
+    public String toString() {
+        return  FirstName;
+    }
 }
