@@ -56,7 +56,6 @@ public class UserServices implements UserDetailsService {
         userRepository.delete(user);
     }
 
-
     public User getById(long id) {
         User user = userRepository.findById(id).orElse(null);
         if (user == null) {
@@ -65,11 +64,9 @@ public class UserServices implements UserDetailsService {
         return user;
     }
 
-
     public User getUserByEmail(String email_address) {
         return userRepository.getUserByEmail(email_address);
     }
-
 
     @Override
     @Transactional(readOnly = true)

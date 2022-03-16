@@ -39,10 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 protected void configure(AuthenticationManagerBuilder auth) throws Exception { // конфигурация для прохождения аутентификации
     auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder.passwordEncoder());
 }
-//    @Override
-//    public void configure(WebSecurity web) throws Exception {
-//        web.ignoring().antMatchers("/**");
-//    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors()
@@ -53,14 +50,11 @@ protected void configure(AuthenticationManagerBuilder auth) throws Exception { /
                 .hasAnyAuthority("ADMIN", "USER")
                 .antMatchers("/admin/**").hasAuthority("ADMIN")
                 .and().httpBasic()
-                .and().formLogin().permitAll().successHandler(new SuccessUserHandler()).and()
+                .and().formLogin().loginPage("/login").permitAll().successHandler(new SuccessUserHandler()).and()
                 .logout().logoutSuccessUrl("/login");
 
     }
 
 
-//        @Bean
-//        public  static   BCryptPasswordEncoder passwordEncoder() {
-//            return new BCryptPasswordEncoder();
-//        }
+
 }

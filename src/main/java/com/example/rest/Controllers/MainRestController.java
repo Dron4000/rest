@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -28,33 +29,34 @@ public class MainRestController {
 
 
     @GetMapping("/admin")
-    public ResponseEntity<List<User>> getListUsers() {
+    public ResponseEntity<List<UserDTO>> getListUsers() {
         List<User> allUsers = userService.getAllUsers();
+        List<UserDTO>usersDTOList = allUsers.stream().map(a->UserDTO.fromUser(a)).collect(Collectors.toList());
         return !allUsers.isEmpty()
-                ? new ResponseEntity<>(allUsers, HttpStatus.OK)
+                ? new ResponseEntity<>(usersDTOList, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
 
     @GetMapping("/admin/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable long id) {
-        User user = userService.getById(id);
+    public ResponseEntity<UserDTO> getUserById(@PathVariable long id) {
+        UserDTO user = UserDTO.fromUser(userService.getById(id));
         return new ResponseEntity<>(user, HttpStatus.OK);
 
     }
 
 
     @PostMapping(value = "/admin")
-    public ResponseEntity<User> newUser(@RequestBody User user) {
-        userService.save(user);
+    public ResponseEntity<UserDTO> newUser(@RequestBody UserDTO user) {
+        userService.save(user.toUser());
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
 
     @PutMapping(value = "/admin")
-    public ResponseEntity<User> editUser(@RequestBody User user) {
+    public ResponseEntity<UserDTO> editUser(@RequestBody UserDTO user) {
 
-        userService.edit(user);
+        userService.edit(user.toUser());
         return new ResponseEntity<>(user, HttpStatus.OK);
 
     }
