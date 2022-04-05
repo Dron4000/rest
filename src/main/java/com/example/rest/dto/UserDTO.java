@@ -1,7 +1,7 @@
-package com.example.rest.DTO;
+package com.example.rest.dto;
 
-import com.example.rest.Models.Role;
-import com.example.rest.Models.User;
+import com.example.rest.models.Role;
+import com.example.rest.models.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.Set;
@@ -19,6 +19,19 @@ public class UserDTO {
 
     public UserDTO() {
     }
+
+    public UserDTO(User user) {
+        this.id = user.getId();
+        this.FirstName = user.getFirstName();
+        this.LastName = user.getLastName();
+        this.age = user.getAge();
+        this.Email  = user.getEmail();
+        this.password = user.getPassword();
+        this.roles = user.getRoles();
+
+
+    }
+
 
     public Long getId() {
         return id;
@@ -76,32 +89,32 @@ public class UserDTO {
         this.roles = roles;
     }
 
-    public User toUser() {
-        User user = new User();
-        user.setId(id);
-        user.setFirstName(FirstName);
-        user.setLastName(LastName);
-        user.setAge(age);
-        user.setEmail(Email);
-        user.setPassword(password);
-        user.setRoles(roles);
-        return user;
-    }
-
-    public static UserDTO fromUser(User user) {
-        UserDTO userDTO = new UserDTO();
-
-        userDTO.setId(user.getId());
-        userDTO.setFirstName(user.getFirstName());
-        userDTO.setLastName(user.getLastName());
-        userDTO.setAge(user.getAge());
-        userDTO.setEmail(user.getEmail());
-        userDTO.setPassword(user.getPassword());
-        userDTO.setRoles(user.getRoles());
-        return userDTO;
-
-
-    }
+//    public User toUser() {
+//        User user = new User();
+//        user.setId(id);
+//        user.setFirstName(FirstName);
+//        user.setLastName(LastName);
+//        user.setAge(age);
+//        user.setEmail(Email);
+//        user.setPassword(password);
+//        user.setRoles(roles);
+//        return user;
+//    }
+//
+//    public static UserDTO fromUser(User user) {
+//        UserDTO userDTO = new UserDTO(user);
+//
+//        userDTO.setId(user.getId());
+//        userDTO.setFirstName(user.getFirstName());
+//        userDTO.setLastName(user.getLastName());
+//        userDTO.setAge(user.getAge());
+//        userDTO.setEmail(user.getEmail());
+//        userDTO.setPassword(user.getPassword());
+//        userDTO.setRoles(user.getRoles());
+//        return userDTO;
+//
+//
+//    }
 
 
 }

@@ -1,7 +1,10 @@
-let userInfo = $('#tableAllUsers')
-let allUser = []
+let userInfo = $('#tableAllUsers');
+let rolesInfo = $('#addRole');
+let editRolesInfo = $('#editRole');
+let allUser = [];
+let allRoles = [];
 
-getAllUsers()
+getAllUsers();
 
 
 function getAllUsers() {
@@ -33,13 +36,14 @@ function addUserForTable(user) {
         '<td>' + user.age + '</td>' +
         '<td>' + user.roles.map(roleUser => roleUser.name) + '</td>' +
         '<td>' +
-        '<button onclick="editUserById(' + user.id + ')" class="btn btn-info edit-btn" data-toggle="modal" data-target="#edit"' +
+        '<button onclick="editUserById(' + user.id + '); getAllRoles(); " class="btn btn-info edit-btn" data-toggle="modal" data-target="#edit"' +
         '>Edit</button></td>' +
         '<td>' +
         '<button onclick="deleteUserById(' + user.id + ')" class="btn btn-danger" data-toggle="modal" data-target="#delete"' +
         '>Delete</button></td>' +
         '</tr>'
     )
+
 }
 
 
@@ -179,6 +183,7 @@ function deleteUserById(id) {
             })
         })
 }
+
 function deleteButton() {
     let userId = ($('#deleteId').val());
     console.log(userId)
@@ -194,7 +199,44 @@ function deleteButton() {
             $('#delete').modal('hide');
         })
 }
+
 $('#panelTabs a').on('click', function (event) {
     event.preventDefault()
     $(this).tab('show')
 })
+
+
+function getAllRoles() {
+    fetch("api/roles").then((response) => {
+        console.log(response.statusText + response.status)
+        if (response.ok) {
+            response.json().then((roles) => {
+                roles.forEach((role) => {
+                    console.log(role)
+                    if (allRoles.length <= 3) {
+                        // ограничения по массиву нужен, что бы роли не двоились при нажатии на кнопки edit и new User
+                        addRolesForSelect(role)
+                        addRolesForEdit(role)
+
+                        allRoles.push(role)
+                    }
+                });
+            });
+            console.log(allRoles)
+        } else {
+            console.error(response.statusText + response.status)
+        }
+    });
+}
+
+function addRolesForSelect(role) {
+    rolesInfo.append(
+        '<option value="' + role.id + '" text="' + role.name + '">' + role.name + '</option>'
+    )
+}
+
+function addRolesForEdit(role) {
+    editRolesInfo.append(
+        '<option name="' + role.name + '" value="' + role.id + '" text="' + role.name + '">' + role.name + '</option>'
+    )
+}

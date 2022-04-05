@@ -1,6 +1,7 @@
-package com.example.rest.Models;
+package com.example.rest.models;
 
 
+import com.example.rest.dto.UserDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -52,6 +53,27 @@ public class User implements UserDetails, Serializable {
 
     public User() {
     }
+
+    public User(String firstName, String lastName, int age, String email, String password, Set<Role> roles) {
+        FirstName = firstName;
+        LastName = lastName;
+        this.age = age;
+        Email = email;
+        this.password = password;
+        this.roles = roles;
+    }
+
+    public User(UserDTO userDTO){
+         this.id = userDTO.getId();
+         this.FirstName = userDTO.getFirstName();
+         this.LastName = userDTO.getLastName();
+         this.age = userDTO.getAge();
+         this.Email  = userDTO.getEmail();
+         this.password = userDTO.getPassword();
+         this.roles = userDTO.getRoles();
+
+
+     }
 
 
     public User(Long id, String firstName, String lastName, int age, String email, String password, Set<Role> roles) {

@@ -1,6 +1,6 @@
-package com.example.rest.Repositories;
+package com.example.rest.repositories;
 
-import com.example.rest.Models.Role;
+import com.example.rest.models.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

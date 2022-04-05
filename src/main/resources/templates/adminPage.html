@@ -15,6 +15,10 @@
           integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Bootstrap CSS (Cloudflare CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/css/bootstrap.min.css"
+          integrity="sha512-T584yQ/tdRR5QwOpfvDfVQUidzfgc2339Lc8uBDtcp/wYu80d7jwBgAxbyMh0a9YM9F8N3tdErpFI8iaGx6x5g=="
+          crossorigin="anonymous" referrerpolicy="no-referrer">
     <title>ADMIN PAGE</title>
 </head>
 <body class>
@@ -23,10 +27,8 @@
 <nav class="navbar navbar-dark bg-dark d-flex justify-content-between">
 
     <span>
-    <span class="navbar-brand font-weight-bold" th:text="${user.email}"></span>
-    <span class="navbar-bran font-weight-bold text-white"
-
-          th:text="'with roles: ' + ${#strings.toString(user.roles).replace('[','').replace(']','')}"></span>
+    <span class="navbar-brand font-weight-bold" id="navBarInfo"></span>
+    <span class="navbar-bran font-weight-bold text-white" ></span>
     </span>
 
     <ul class="nav navbar-nav navbar-dark navbar-right sticky-top">
@@ -59,6 +61,7 @@
                        role="tab"
                        aria-controls="usersTable"
                        aria-selected="true"
+
                     >Users table</a>
                 </li>
                 <li class="nav-item ">
@@ -68,8 +71,9 @@
                        data-toggle="tab"
                        href="#newUser"
                        aria-controls="newUser"
-                       aria-selected="false">
-                        New User</a>
+                       aria-selected="false"
+                       onclick="getAllRoles()"
+                    >New User</a>
                 </li>
             </ul>
 
@@ -90,8 +94,8 @@
                                 <th scope="col">Email</th>
                                 <th scope="col">Age</th>
                                 <th scope="col">Role</th>
-                                <th scope="col">Edit</th>
-                                <th scope="col">Delete</th>
+                                <th scope="col">Править</th>
+                                <th scope="col">Удаление</th>
                             </tr>
                             </thead>
                             <tbody id="tableAllUsers">
@@ -163,10 +167,6 @@
                                     <select class="custom-select form-control-label " multiple size="4"
                                             id="addRole"
                                             name="roles">
-                                        <option
-                                                th:each="role : ${roles}"
-                                                th:value="${role.getId()}"
-                                                th:text="${role.getName()}"></option>
                                     </select>
                                 </div>
                                 <div>
@@ -241,10 +241,6 @@
                                     <select class="custom-select form-control-label "
                                             th:multiple="4" id="editRole"
                                             name="roles" required>
-                                        <option
-                                                th:each="role :${roles}"
-                                                th:value="${role.getId()}"
-                                                th:text="${role.name}"></option>
                                     </select>
                                 </div>
                             </form>
@@ -344,8 +340,7 @@
         crossorigin="anonymous"></script>
 
 
-
-
+<script src="../onlyNavBar.js" type=text/javascript></script>
 <script src="../index.js" type=text/javascript></script>
 </body>
 </html>

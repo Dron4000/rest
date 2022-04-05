@@ -1,4 +1,4 @@
-package com.example.rest.Models;
+package com.example.rest.models;
 
 
 
@@ -26,7 +26,7 @@ public class Role implements GrantedAuthority {
     }
 
     @ManyToMany(mappedBy = "roles")
-    List<User>users = new ArrayList<>();
+  private   List<User>users = new ArrayList<>();
 
     @Override
 //    @JsonIgnore

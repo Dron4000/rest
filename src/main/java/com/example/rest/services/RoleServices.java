@@ -1,9 +1,10 @@
-package com.example.rest.Services;
+package com.example.rest.services;
 
-import com.example.rest.Models.Role;
-import com.example.rest.Repositories.RoleRepositories;
+import com.example.rest.models.Role;
+import com.example.rest.repositories.RoleRepositories;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -12,14 +13,14 @@ import java.util.Set;
 public class RoleServices {
 
     @Autowired
-    RoleRepositories roleRepositories;
+    private RoleRepositories roleRepositories;
 
-
+    @Transactional
     public Set<Role> getAllRoles() {
         return new HashSet<>(roleRepositories.findAll());
     }
 
-
+    @Transactional
     public Set<Role> getSetRoles(Set<String> roles) {
         return roleRepositories.getSetRoles(roles);
     }
