@@ -89,32 +89,7 @@ public class UserDTO {
         this.roles = roles;
     }
 
-//    public User toUser() {
-//        User user = new User();
-//        user.setId(id);
-//        user.setFirstName(FirstName);
-//        user.setLastName(LastName);
-//        user.setAge(age);
-//        user.setEmail(Email);
-//        user.setPassword(password);
-//        user.setRoles(roles);
-//        return user;
-//    }
-//
-//    public static UserDTO fromUser(User user) {
-//        UserDTO userDTO = new UserDTO(user);
-//
-//        userDTO.setId(user.getId());
-//        userDTO.setFirstName(user.getFirstName());
-//        userDTO.setLastName(user.getLastName());
-//        userDTO.setAge(user.getAge());
-//        userDTO.setEmail(user.getEmail());
-//        userDTO.setPassword(user.getPassword());
-//        userDTO.setRoles(user.getRoles());
-//        return userDTO;
-//
-//
-//    }
+
 
 
 }
