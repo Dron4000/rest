@@ -4,11 +4,14 @@ import com.example.rest.dto.UserDTO;
 import com.example.rest.models.User;
 import com.example.rest.services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -55,7 +58,15 @@ public class MainRestController {
     public ResponseEntity<UserDTO> newUser(@RequestBody UserDTO user) {
         User userSave = userService.save(new User(user));
         UserDTO userDTO = new UserDTO(userSave);
-        return new ResponseEntity<>(userDTO, HttpStatus.CREATED);
+        final URI location = ServletUriComponentsBuilder
+                .fromCurrentServletMapping()
+                .path("api/admin/{id}")
+                .build()
+                .expand(userDTO.getId()).toUri();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(location);
+        return new ResponseEntity<>(userDTO, headers, HttpStatus.CREATED);
     }
 
 

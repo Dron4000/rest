@@ -4,6 +4,7 @@ import com.example.rest.models.User;
 import com.example.rest.services.RoleServices;
 import com.example.rest.services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -57,12 +58,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
+
+
     @Bean
     public static BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(12);
 
     }
-
+//    // 1 вариант
+//    @Bean(initMethod="init",destroyMethod = "destr")
+//    public InitMethodExampleBean initMethodExampleBean1() {
+//        return new InitMethodExampleBean();
+//    }
+//    //2 вариант
+//    @Bean
+//    public InitMethodExampleBean initMethodExampleBean2() {
+//        InitMethodExampleBean initMethodExampleBean = new InitMethodExampleBean();
+//        initMethodExampleBean.init();
+//        return initMethodExampleBean;
+//    }
 
     @PostConstruct
     private void initMethod() {

@@ -30,7 +30,7 @@ public class UserServices implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<User> getAllUsers() {
         List<User> allUsers = userRepository.findAll();
         return allUsers;
@@ -66,7 +66,7 @@ public class UserServices implements UserDetailsService {
         userRepository.delete(user);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public User getById(long id) {
         User user = userRepository.findById(id).orElse(null);
         if (user == null) {
@@ -89,7 +89,7 @@ public class UserServices implements UserDetailsService {
         return user;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public User getAuthenticationUser(@AuthenticationPrincipal User user) {
         return user;
 

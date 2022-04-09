@@ -14,6 +14,8 @@ import java.util.List;
 @Table(name = "roles")
 public class Role implements GrantedAuthority {
 
+
+  
     @Id
     @Column(name = "role_id")
     private Long id;
